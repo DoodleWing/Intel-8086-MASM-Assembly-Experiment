@@ -1,0 +1,36 @@
+DATA SEGMENT
+
+BR DB 'Hello',68,-20,3 DUP(4)	;按Byte分配变量BR
+WR DW 3456H,0AFH,0A123H			;按Word分配变量WR
+X DW 1,2,$+4,3,4,$+4				;按Word分配变量X
+
+DATA ENDS
+
+STACK SEGMENT STACK
+
+STACK ENDS
+
+CODE SEGMENT
+ASSUME DS:DATA,SS:STACK,CS:CODE 
+START:
+
+MOV AX,DATA			;将DATA的值装入AX
+MOV DS,AX			;将AX装入DS寄存器
+
+LEA DX,BR			;将变量BR的偏移地址装入DX
+MOV AH,9				;设置9号中断
+INT 21H				;启动中断
+
+LEA DX,WR			;将变量WR的偏移地址装入DX
+MOV AH,9				;设置9号中断
+INT 21H				;启动中断
+
+LEA DX,X				;将变量X的偏移地址装入DX
+MOV AH,9				;设置9号中断
+INT 21H				;启动中断
+
+MOV AX,4C00H
+INT 21H
+
+CODE ENDS
+END START

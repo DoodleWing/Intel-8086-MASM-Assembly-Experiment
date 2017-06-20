@@ -1,0 +1,49 @@
+DATA SEGMENT
+ORG 0100H
+S DW ?
+
+DATA ENDS
+
+STACK SEGMENT STACK
+DB 200 DUP(0)
+STACK ENDS
+
+CODE SEGMENT
+	ASSUME DS:DATA,SS:STACK,CS:CODE
+
+;子程序功能：求1到n的和
+;入口参数：CX存放n的值
+;出口参数：BX存放和
+
+sum1toN	PROC 
+	MOV BX,0
+su:	ADD BX,CX
+	LOOP su
+	RET
+sum1toN	ENDP	
+
+
+	
+START:
+	MOV AX,DATA
+	MOV DS,AX
+	
+	MOV AX,0
+	MOV CX,3
+	
+cal:	PUSH CX
+	ADD CX,2
+	CALL sum1toN
+	ADD AX,BX
+	POP CX
+	LOOP cal
+	
+	MOV S,AX
+	
+	MOV AH,4CH
+	INT 21H
+CODE ENDS
+	END START
+	
+
+;S=(1+2+3)+(1+2+3+4)+(1+2+3+4+5)

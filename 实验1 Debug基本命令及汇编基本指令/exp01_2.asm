@@ -1,0 +1,22 @@
+DATA SEGMENT
+
+DATA ENDS
+
+STACK SEGMENT STACK
+
+STACK ENDS
+
+CODE SEGMENT
+ASSUME DS:DATA,SS:STACK,CS:CODE 
+START:
+
+MOV AX,1000H			;将立即数1000H送入AX寄存器，AX=1000H，立即数寻址
+MOV AX,ds:[1000H]	;将ds:1000H内存地址的内容送入AX寄存器，AX=5657H，直接寻址
+
+MOV BX,2000H			;将立即数2000H送入BX寄存器，BX=2000H，立即数寻址
+MOV AX,BX			;将BX寄存器的内容送入AX，AX=2000H，寄存器寻址
+MOV AX,[BX]			;将ds:[BX]中的内容送入AX寄存器，AX=5789H，寄存器间接寻址
+MOV AX,30[BX]		;将ds:[BX+30]中的内容送入AX寄存器，AX=10EBH，寄存器相对寻址
+
+CODE ENDS              　　
+END START

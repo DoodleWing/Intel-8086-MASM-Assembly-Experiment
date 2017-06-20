@@ -1,0 +1,29 @@
+DATA SEGMENT
+
+DATA ENDS
+
+STACK SEGMENT STACK
+
+STACK ENDS
+
+CODE SEGMENT
+	ASSUME DS:DATA,SS:STACK,CS:CODE 
+START:
+	MOV AX,1000H
+	MOV BX,2000H
+	MOV DS,AX
+	MOV ES,BX
+	MOV SI,0
+	MOV DI,0
+	
+	MOV CX,50
+	CLD
+R:	MOVSW
+	LOOP R
+	;REP MOVSW
+	
+	MOV AH,4CH
+	INT 21H
+CODE ENDS
+	END START
+;编写程序，实现将内存偏移地址为 1000H 开始的连续 100 个字节送往偏移地址为 2000H 开始 的连续 100 个内存单元中。要求使用二种不同的方法(用单一的串操作指令、用带重复前缀的串操 作指令)。
