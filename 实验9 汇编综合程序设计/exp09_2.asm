@@ -1,5 +1,5 @@
 DATA SEGMENT
-
+NUMBERS DB '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'
 DATA ENDS
 
 STACK SEGMENT STACK
@@ -31,6 +31,17 @@ START:
 	MOV AX,DATA
 	MOV DS,AX
 	
+	MOV BX,1234H
+	MOV CX,4
+for:
+	PUSH CX
+	MOV CL,4
+	ROL BX,CL
+	POP CX
+	MOV DX,BX
+	CALL PrintHexNumber
+	LOOP for
+
 	MOV AH,4CH
 	INT 21H
 CODE ENDS
